@@ -2,8 +2,8 @@
 
 import os
 import sys
-from cn.edu.zju.shida.ml.libsvm321.python.svm import *
-from cn.edu.zju.shida.ml.libsvm321.python.svm import __all__ as svm_all
+from MLshida.libsvm321.python.svm import *
+from MLshida.libsvm321.python.svm import __all__ as svm_all
 
 
 __all__ = ['evaluations', 'svm_load_model', 'svm_predict', 'svm_read_problem',

@@ -123,7 +123,7 @@ class SVMParameters(object):
             # model = mlu.unpickleSth('/home/shida/ali/Nov/181107_svm_r.model')
 
         yPred, _, _ = svmutil.svm_predict(list(range(len(testdata))), testdata, model)
-        predRes = rNormalization(yPred, meanList[len(self.xTraining)], stdList[len(self.xTraining)])  # 预测结果反归一化
+        predRes = rNormalization(yPred, meanList[len(self.xTraining[0])], stdList[len(self.xTraining[0])])  # 预测结果反归一化
         # predPath = '/home/shida/ali/Nov/predictMetaData.txt'
         # mlu.pickleSth(predPath, predRes)
         mlu.writeResult(outputPath, predRes)
@@ -181,13 +181,8 @@ if __name__ == '__main__':
     xTraining, yTraining = splitDataLabel(dataNormedList)  # 分开数据和标签
     svmModel = SVMParameters(xTraining, yTraining)  # 将训练数据和标签输入SVM参数类中,得到svm训练实例对象
 
-    # svmModel.largerScaleSearching()  # 大尺度上优化参数
-    svmModel.minMSE = 0.10369939138206832
-    # svmModel.minCIndex = 3
-    # svmModel.minGammaIndex = 4
-    # svmModel.minEpsilonIndex = 1
-    # optParam = svmModel.minorScaleSearching(n=5)  # 小尺度上优化参数
-    optParam = [21.112126572366314, 0.0029603839189656167, 0.1435872943746294]
+    svmModel.largerScaleSearching()  # 大尺度上优化参数
+    optParam = svmModel.minorScaleSearching(n=5)  # 小尺度上优化参数
     optModel = svmModel.getOptimalModel(optParam)  # 使用优化的参数训练模型(默认保存为autosave.model)
 
     # modelPath = '/home/shida/ali/Nov/181107_svm_r.model'
